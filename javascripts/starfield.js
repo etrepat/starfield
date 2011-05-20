@@ -76,11 +76,10 @@ var Starfield = (function() {
 
 	function addCelestialObjectsTo(group, max, func) {
 	  var celObj;
+	  var material = new THREE.ParticleCanvasMaterial({color: 0xffffff, program: func});
 
 	  for(var i=0; i < max; ++i) {
-			celObj = new THREE.Particle(
-			  new THREE.ParticleCanvasMaterial({color: 0xffffff, program: func})
-			);
+			celObj = new THREE.Particle(material);
 			celObj.position.x = Math.random() * 2000 - 1000;
 			celObj.position.y = Math.random() * 2000 - 1000;
 			celObj.position.z = Math.random() * 2000 - 1000;
@@ -138,4 +137,3 @@ $(document).ready(function() {
   Starfield.initialize('main');
   Starfield.startAnimation();
 });
-
