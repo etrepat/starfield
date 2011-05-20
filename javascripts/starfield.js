@@ -5,13 +5,16 @@ var Starfield = (function() {
 	var starfield;
 	var mouseX = 0, mouseY = 0;
 
-  function initialize() {
-    container = document.getElementById('main');
+  function initialize(element) {
+    container = ( typeof element == 'string') ? document.getElementById(element) : element;
     measure();
     setupCamera();
     setupScene();
     createRenderer();
+
+    // Event listeners
     $(document).mousemove(onMouseMove);
+    $(window).resize(onResize);
   }
 
   function measure() {
@@ -96,6 +99,16 @@ var Starfield = (function() {
 		mouseY = e.clientY - windowHalfHeight;
 	}
 
+	function onResize() {
+    measure();
+
+    if ( camera )
+      camera.aspect = windowWidth / windowHeight;
+
+    if ( renderer )
+      renderer.setSize(windowWidth, windowHeight);
+	}
+
 	// ---------------------------------------------------------------------------
 
 	function animate() {
@@ -122,7 +135,7 @@ var Starfield = (function() {
 })();
 
 $(document).ready(function() {
-  Starfield.initialize();
+  Starfield.initialize('main');
   Starfield.startAnimation();
 });
 
